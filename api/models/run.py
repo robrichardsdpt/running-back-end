@@ -46,4 +46,9 @@ class Run(models.Model):
     }
 
   def run_pace(self):
-    pace = self.distance/self.time
+    miles_uncorrected = (self.time/60)/self.distance
+    miles_in_minutes = Math.floor(miles_uncorrected)
+    remainder = miles_uncorrected - miles_in_minutes
+    seconds = remainder * 60
+    rounded_seconds = Math.round(seconds)
+    return f'{milesInMinutes}:{seconds} min/mile'
