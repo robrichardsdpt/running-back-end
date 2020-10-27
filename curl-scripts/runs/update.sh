@@ -1,6 +1,6 @@
 #!/bin/bash
 
-curl "http://localhost:8000/runs/${ID}" \
+curl "http://localhost:8000/runs/${ID}/" \
   --include \
   --request PATCH \
   --header "Content-Type: application/json" \
