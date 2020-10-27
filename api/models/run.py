@@ -7,7 +7,8 @@ from datetime import datetime
 class Run(models.Model):
   # define fields
   # https://docs.djangoproject.com/en/3.0/ref/models/fields/
-  date = models.DateField(_("Date"), default=datetime.date.today)
+  date = models.CharField(max_length=100, default="date")
+  # DateField(_("Date"), default=datetime.date.today)
   time = models.CharField(max_length=100, default="time")
   # TimeField
   distance = models.FloatField(null=True, blank=True, default=None)

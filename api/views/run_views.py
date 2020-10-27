@@ -13,7 +13,7 @@ from ..serializers import RunSerializer, UserSerializer
 # Create your views here.
 class Runs(generics.ListCreateAPIView):
     permission_classes=(IsAuthenticated,)
-    serializer_class = MangoSerializer
+    serializer_class = RunSerializer
     def get(self, request):
         """Index request"""
         # Get all the runs:
@@ -44,7 +44,7 @@ class RunDetail(generics.RetrieveUpdateDestroyAPIView):
         """Show request"""
         # Locate the run to show
         run = get_object_or_404(Run, pk=pk)
-        # Only want to show owned mangos?
+        # Only want to show owned runs?
         if not request.user.id == run.owner.id:
             raise PermissionDenied('Unauthorized, you do not own this run')
 
@@ -54,9 +54,9 @@ class RunDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def delete(self, request, pk):
         """Delete request"""
-        # Locate mango to delete
+        # Locate run to delete
         run = get_object_or_404(Run, pk=pk)
-        # Check the mango's owner agains the user making this request
+        # Check the run's owner agains the user making this request
         if not request.user.id == run.owner.id:
             raise PermissionDenied('Unauthorized, you do not own this run')
         # Only delete if the user owns the run
@@ -72,8 +72,8 @@ class RunDetail(generics.RetrieveUpdateDestroyAPIView):
         if request.data['run'].get('owner', False):
             del request.data['run']['owner']
 
-        # Locate Mango
-        # get_object_or_404 returns a object representation of our Mango
+        # Locate Run
+        # get_object_or_404 returns a object representation of our Run
         run = get_object_or_404(Run, pk=pk)
         # Check if user is the same as the request.user.id
         if not request.user.id == run.owner.id:
