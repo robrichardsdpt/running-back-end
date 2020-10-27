@@ -7,18 +7,22 @@ from datetime import datetime
 class Run(models.Model):
   # define fields
   # https://docs.djangoproject.com/en/3.0/ref/models/fields/
-  date = models.CharField(max_length=100, default="date")
-  # DateField(_("Date"), default=datetime.date.today)
-  time = models.CharField(max_length=100, default="time")
+  date = models.DateField(null=True)
+  # in total seconds
+  time = models.IntegerField(
+        default=0,
+        validators=[
+          MinValueValidator(0)]
+  )
   # TimeField
   distance = models.FloatField(null=True, blank=True, default=None)
-  location = models.CharField(max_length=100, default="here")
+  location = models.CharField(max_length=100, default="no location provided")
   rpe = models.IntegerField(
       default=1,
-      validators=[MaxValueValidator(100),
+      validators=[MaxValueValidator(10),
       MinValueValidator(1)]
   )
-  notes = models.CharField(max_length=250, default="notes")
+  notes = models.CharField(max_length=250, default="no notes")
   owner = models.ForeignKey(
       get_user_model(),
       on_delete=models.CASCADE
@@ -40,3 +44,6 @@ class Run(models.Model):
         'notes': self.notes,
         'owner': self.owner
     }
+
+  def run_pace(self):
+    pace = self.distance/self.time
