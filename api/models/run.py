@@ -53,11 +53,3 @@ class Run(models.Model):
         'notes': self.notes,
         'owner': self.owner
     }
-
-  def run_pace(self):
-    miles_uncorrected = (self.time/60)/self.distance
-    miles_in_minutes = floor(miles_uncorrected)
-    remainder = miles_uncorrected - miles_in_minutes
-    seconds = remainder * 60
-    rounded_seconds = round(seconds)
-    return f'{milesInMinutes}:{seconds} min/mile'
