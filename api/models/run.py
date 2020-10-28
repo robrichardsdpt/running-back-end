@@ -15,6 +15,13 @@ class Run(models.Model):
           MinValueValidator(0)]
   )
   # TimeField
+  average_spd = models.FloatField(
+        default = 0,
+        validators = [
+          MinValueValidator(0)
+        ]
+  )
+  average_pace = models.CharField(max_length=100, default="not calculated")
   distance = models.FloatField(null=True, blank=True, default=None)
   location = models.CharField(max_length=100, default="no location provided")
   rpe = models.IntegerField(
@@ -39,6 +46,8 @@ class Run(models.Model):
         'date': self.date,
         'time': self.time,
         'distance': self.distance,
+        'average_spd': self.average_spd,
+        'average_pace': self.average_pace,
         'location': self.location,
         'rpe': self.rpe,
         'notes': self.notes,
@@ -47,8 +56,8 @@ class Run(models.Model):
 
   def run_pace(self):
     miles_uncorrected = (self.time/60)/self.distance
-    miles_in_minutes = Math.floor(miles_uncorrected)
+    miles_in_minutes = floor(miles_uncorrected)
     remainder = miles_uncorrected - miles_in_minutes
     seconds = remainder * 60
-    rounded_seconds = Math.round(seconds)
+    rounded_seconds = round(seconds)
     return f'{milesInMinutes}:{seconds} min/mile'
