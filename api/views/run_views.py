@@ -22,7 +22,8 @@ class Runs(generics.ListCreateAPIView):
         runs = Run.objects.filter(owner=request.user.id)
         # Run the data through the serializer
         data = RunSerializer(runs, many=True).data
-        return Response({ 'runs': data })
+        sorted_data = sorted(data, key = lambda i : i['date'], reverse=True)
+        return Response({ 'runs': sorted_data })
 
     def post(self, request):
         """Create request"""
