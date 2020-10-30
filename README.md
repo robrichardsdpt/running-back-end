@@ -69,6 +69,6 @@ Version 4: Interact with other users, Calendar view
   4.  Run pipenv install to install dependencies.
   5.  Create a psql database for the project
   6.  Type psql to get into interactive shell
-  7.  Run CREATE DATABASE "<your-DB-name>";
+  7.  Run CREATE DATABASE "your-DB-name";
   8.  Exit shell
   9.  Open the repository in Atom with atom .
